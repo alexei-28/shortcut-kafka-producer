@@ -1,0 +1,55 @@
+# default profile
+server:
+  port: 8081
+  servlet:
+    context-path: /api/v1/
+app:
+  kafka:
+    topics:
+      message: message_topic
+spring:
+  application:
+    name: shortcut-kafka-producer
+  docker:
+    # Only for development
+    # Если docker образа не существует, Spring Boot автоматически скачает и создаст его при запуске приложения.
+    # Для локальной разработки. Spring Boot будет сам следить за тем, чтобы база данных была «жива»,
+    # Rогда вы нажимаете кнопку Run/Stop, контейнер kafka_postgres будет автоматически запущен, а при остановке приложения — остановлен.
+    # Как это работает.
+    # Когда вы запускаете приложение:
+    # - Spring ищет в корне проекта файлы типа postgresql-docker-compose.yml или compose.yaml.
+    # - Вызывает postgresql-docker-compose.yml.
+    # - Spring автоматически подменяет spring.datasource.url, username и password, считывая их прямо из вашего YAML-файла.
+    #   Вам даже не нужно прописывать их в application.yml вручную!
+    # - При остановке приложения Spring делает docker-compose stop.
+    compose:
+      file: postgresql-docker-compose.yml # Указываем ваш конкретный файл
+      lifecycle-management: start_and_stop # Останавливать контейнер при выключении приложения
+      readiness:
+        tcp:
+          connect-timeout: 10s # Ждать, пока база реально поднимется
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+        use_sql_comments: true
+  # Need because you can run app by "java -jar shortcutkafkaproducer-0.0.1-SNAPSHOT.jar"
+  datasource:
+    url: jdbc:postgresql://localhost:5433/docker_kafka_producer_db
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+  kafka:
+    bootstrap-servers: localhost:9092
+    topic-name: dev-topic
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+logging.level:
+  org.springframework.kafka: info
+  org.hibernate.SQL: debug
+  org.hibernate.orm.jdbc.bind: trace
