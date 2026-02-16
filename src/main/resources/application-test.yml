@@ -2,7 +2,7 @@
 app:
   kafka:
     topics:
-      message: test_message_topic
+      message: test-message-topic
 spring:
   jpa:
     hibernate:
@@ -16,7 +16,7 @@ spring:
   #  password: postgres
   kafka:
     bootstrap-servers: localhost:9092
-    topic-name: test_topic
+    topic-name: test-topic
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

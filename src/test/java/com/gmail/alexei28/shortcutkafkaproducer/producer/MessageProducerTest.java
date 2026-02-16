@@ -1,13 +1,13 @@
 package com.gmail.alexei28.shortcutkafkaproducer.producer;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import com.gmail.alexei28.shortcutkafkaproducer.dto.Message;
+import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.JsonPath;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
-import java.util.concurrent.CompletableFuture;
+import java.util.Random;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.util.StreamUtils;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,42 +29,34 @@ class MessageProducerTest {
   // @InjectMocks — это "живой" объект (ваш сервис), в который вставили эти манекены в качестве
   // запчастей.
   @InjectMocks private MessageProducer messageProducer;
-  private Message producedMessage;
-  private String producedMessageJson;
+  private static String jsonTemplate;
+  private String producedValidJson;
+  private final long randomNumber = new Random().nextLong(10000);
+
+  @BeforeAll
+  static void beforeAll() throws IOException {
+    jsonTemplate =
+        StreamUtils.copyToString(
+            new ClassPathResource("message_template.json").getInputStream(),
+            StandardCharsets.UTF_8);
+  }
 
   @BeforeEach
-  void setUp() throws IOException {
-    producedMessage =
-        new Message(
-            System.currentTimeMillis(),
-            "MessageLog_Test_".concat(String.valueOf(System.currentTimeMillis())),
-            LocalDateTime.now());
-
-    producedMessageJson =
-        StreamUtils.copyToString(
-            new ClassPathResource("message.json").getInputStream(), StandardCharsets.UTF_8);
+  void setUp() {
+    // Update specific nodes in the JSON
+    DocumentContext context =
+        JsonPath.parse(jsonTemplate)
+            .set("$.number", randomNumber)
+            .set("$.content", "Message_TEST_PRODUCED_" + randomNumber);
+    producedValidJson = context.jsonString();
   }
 
   @Test
   @DisplayName("Producer should send raw message")
-  void shouldSendRawMessage() {
+  void shouldSendValueMessage() {
     // Act
-    messageProducer.sendRaw(TOPIC, producedMessageJson);
+    messageProducer.sendValue(TOPIC, producedValidJson);
     // Assert
-    verify(kafkaTemplateMock).send(TOPIC, producedMessageJson);
-  }
-
-  @Test
-  @DisplayName("Producer should send success object Message")
-  void testSendMessage_Success() {
-    // Arrange
-    CompletableFuture<SendResult<String, Object>> future = new CompletableFuture<>();
-    when(kafkaTemplateMock.send(anyString(), any())).thenReturn(future);
-    // Act
-    messageProducer.sendMessage(TOPIC, producedMessage);
-    // Assert
-    // Завершаем future успешно
-    future.complete(mock(SendResult.class));
-    verify(kafkaTemplateMock).send(TOPIC, producedMessage);
+    verify(kafkaTemplateMock).send(TOPIC, producedValidJson);
   }
 }

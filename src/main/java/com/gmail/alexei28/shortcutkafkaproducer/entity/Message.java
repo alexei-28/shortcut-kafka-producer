@@ -1,4 +1,4 @@
-package com.gmail.alexei28.shortcutkafkaproducer.dto;
+package com.gmail.alexei28.shortcutkafkaproducer.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;

@@ -3,8 +3,21 @@
 # C-c C-v: same as C-c C-c, but doesn't switch focus to other window
 # C-c C-u: copy query under the cursor as a curl command
 
+# Some generic vars
 :BASE_URL = http://localhost:8081/api/v1
+:rand-num := (random 10000)
+:rand-msg := (concat "Message_PRODUCTION_PRODUCED_" (number-to-string (random 10000)))
 
 ## Hello page
 GET :BASE_URL/hello
+
+# Create new message
+# Post works too, entity just goes after an empty line. Same is for PUT.
+POST :BASE_URL/messages/send-value
+Content-Type: application/json
+
+{
+  "number": :rand-num,
+  "content": ":rand-msg"
+}
 

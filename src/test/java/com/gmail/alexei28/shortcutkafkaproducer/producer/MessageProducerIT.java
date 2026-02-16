@@ -2,27 +2,31 @@ package com.gmail.alexei28.shortcutkafkaproducer.producer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.gmail.alexei28.shortcutkafkaproducer.dto.Message;
+import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.JsonPath;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Random;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.util.StreamUtils;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -49,17 +53,27 @@ class MessageProducerIT {
       new PostgreSQLContainer<>(DockerImageName.parse("postgres:16-alpine"));
 
   @Autowired private MessageProducer messageProducer;
-  private Message producedMessage;
+  private static String jsonTemplate;
+  private String producedValidJson;
+  private long randomNumber;
 
-  private static final Logger logger = LoggerFactory.getLogger(MessageProducerIT.class);
+  @BeforeAll
+  static void beforeAll() throws IOException {
+    jsonTemplate =
+        StreamUtils.copyToString(
+            new ClassPathResource("message_template.json").getInputStream(),
+            StandardCharsets.UTF_8);
+  }
 
   @BeforeEach
   void setUp() {
-    producedMessage =
-        new Message(
-            System.currentTimeMillis(),
-            "MessageLog_Test_".concat(String.valueOf(System.currentTimeMillis())),
-            LocalDateTime.now());
+    randomNumber = new Random().nextLong(10000);
+    // Update specific nodes in the JSON
+    DocumentContext context =
+        JsonPath.parse(jsonTemplate)
+            .set("$.number", randomNumber)
+            .set("$.content", "Message_TEST_PRODUCED_" + randomNumber);
+    producedValidJson = context.jsonString();
   }
 
   /*
@@ -89,26 +103,26 @@ class MessageProducerIT {
     // DefaultKafkaConsumerFactory: Мы создаем фабрику вручную, чтобы точно указать десериализаторы.
     // В данном случае JsonDeserializer важен, если ваш Message улетает в JSON-формате.
     // Используем String для ключа и JsonDeserializer для тела (Message)
-    DefaultKafkaConsumerFactory<String, Message> cf =
+    DefaultKafkaConsumerFactory<String, String> cf =
         new DefaultKafkaConsumerFactory<>(
-            consumerProps, new StringDeserializer(), new JsonDeserializer<>(Message.class, false));
-    Consumer<String, Message> consumer = cf.createConsumer();
+            consumerProps, new StringDeserializer(), new JsonDeserializer<>(String.class, false));
+    Consumer<String, String> consumer = cf.createConsumer();
     consumer.subscribe(Collections.singleton(topic));
 
     // Act
     // 2. Отправляем сообщение через наш сервис
-    messageProducer.sendMessage(topic, producedMessage);
+    messageProducer.sendValue(topic, producedValidJson);
     // 3. Читаем запись напрямую из Kafka
     // KafkaTestUtils.getSingleRecord - блокирует выполнение теста и ждет появления ровно одной
     // записи в топике в течение таймаута. Если сообщение не придет — тест упадет с понятной
     // ошибкой.
-    ConsumerRecord<String, Message> consumerRecord =
+    ConsumerRecord<String, String> consumerRecord =
         KafkaTestUtils.getSingleRecord(consumer, topic, Duration.ofSeconds(10));
 
     // 4. Assert
-    Message actualMessage = consumerRecord.value();
+    String actualMessage = consumerRecord.value();
     assertThat(actualMessage).isNotNull();
-    assertThat(actualMessage.getContent()).isEqualTo(producedMessage.getContent());
+    assertThat(actualMessage).isEqualTo(producedValidJson);
     consumer.close();
   }
 }
