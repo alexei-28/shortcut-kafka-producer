@@ -1,5 +1,7 @@
 package com.gmail.alexei28.shortcutkafkaproducer.configuration;
 
+import com.gmail.alexei28.shortcutkafkaproducer.listeners.KafkaLoggingProducerListener;
+import jakarta.annotation.PostConstruct;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.config.TopicBuilder;
+import org.springframework.kafka.core.KafkaTemplate;
 
 /**
  * Spring configuration class that defines Kafka topics for the application. It creates a topic
@@ -20,21 +23,24 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 @Profile("!test") // Загружать только если профиль 'test' НЕ активен
 public class AppConfiguration {
-  @Value("${app.kafka.topics.message}")
-  private String messageTopic;
+  @Value("${app.kafka.topics.task1}")
+  private String task1Topic;
 
+  private final KafkaTemplate<Object, Object> kafkaTemplate;
+  private final KafkaLoggingProducerListener loggingListener;
   private static final Logger logger = LoggerFactory.getLogger(AppConfiguration.class);
 
-  /*-
-  @Bean
-  public DefaultErrorHandler errorHandler(KafkaTemplate<String, Object> template) {
-    // 1. Определяем логику восстановления (отправка в .DLT топик)
-    DeadLetterPublishingRecoverer recoverer = new DeadLetterPublishingRecoverer(template);
-    // 2. Настраиваем попытки (например, 3 ретрая через 2 секунды)
-    // Для Poison Pill (ошибки десериализации) ретраи обычно пропускаются
-    return new DefaultErrorHandler(recoverer, new FixedBackOff(2000L, 3));
+  public AppConfiguration(
+      KafkaTemplate<Object, Object> kafkaTemplate, KafkaLoggingProducerListener loggingListener) {
+    this.kafkaTemplate = kafkaTemplate;
+    this.loggingListener = loggingListener;
   }
-   */
+
+  @PostConstruct
+  public void registerListener() {
+    // Устанавливаем наш слушатель в шаблон
+    kafkaTemplate.setProducerListener(loggingListener);
+  }
 
   /*
     Будет создан топик "message_topic" с 3 партициями, одна из которых будет лидером.
@@ -45,8 +51,8 @@ public class AppConfiguration {
     Если один брокер «выключился», его копия всё равно присутствует у других, так что обработка продолжается.
   */
   @Bean
-  public NewTopic crateMessageTopic() {
-    logger.info("crateTopic, topic '{}' with 1 partition and replicas 3", messageTopic);
-    return TopicBuilder.name(messageTopic).partitions(1).replicas(3).build();
+  public NewTopic crateTask1Topic() {
+    logger.info("crateTopic, topic '{}' with 1 partition and replicas 3", task1Topic);
+    return TopicBuilder.name(task1Topic).partitions(1).replicas(3).build();
   }
 }

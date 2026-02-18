@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+// Validate is application is up: e.g. http://localhost:8081/api/v1/actuator/health
 @SpringBootApplication
 public class Main {
   private static ConfigurableApplicationContext context;
@@ -16,7 +17,6 @@ public class Main {
     SpringApplication app = new SpringApplication(Main.class);
     app.addListeners(new VersionInfoListener());
     context = app.run(args);
-
     logger.info("Application started successfully!");
     logger.info(
         "Java version: {}, Java vendor: {}",

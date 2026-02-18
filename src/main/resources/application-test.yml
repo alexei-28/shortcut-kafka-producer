@@ -2,7 +2,7 @@
 app:
   kafka:
     topics:
-      message: test-message-topic
+      task1: test-task1-topic
 spring:
   jpa:
     hibernate:

@@ -6,18 +6,17 @@
 # Some generic vars
 :BASE_URL = http://localhost:8081/api/v1
 :rand-num := (random 10000)
-:rand-msg := (concat "Message_PRODUCTION_PRODUCED_" (number-to-string (random 10000)))
+:rand-task1 := (concat "Task1_PRODUCTION_PRODUCED_" (number-to-string (random 10000)))
 
-## Hello page
-GET :BASE_URL/hello
+# Spring Boot actuator
+GET :BASE_URL/actuator/health
 
-# Create new message
+# Create new task1
 # Post works too, entity just goes after an empty line. Same is for PUT.
-POST :BASE_URL/messages/send-value
+POST :BASE_URL/task1/send
 Content-Type: application/json
 
 {
   "number": :rand-num,
-  "content": ":rand-msg"
+  "content": ":rand-task1"
 }
-
