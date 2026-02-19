@@ -1,8 +1,5 @@
 # test profile
 app:
-  kafka:
-    topics:
-      message: test-message-topic
 spring:
   jpa:
     hibernate:
