@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+// Validate is application is up: http://localhost:8081/api/v1/actuator/health
 @SpringBootApplication
 public class Main {
   private static ConfigurableApplicationContext context;
