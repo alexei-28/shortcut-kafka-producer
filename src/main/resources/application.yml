@@ -4,9 +4,6 @@ server:
   servlet:
     context-path: /api/v1/
 app:
-  kafka:
-    topics:
-      message: message-topic
 spring:
   application:
     name: shortcut-kafka-producer
