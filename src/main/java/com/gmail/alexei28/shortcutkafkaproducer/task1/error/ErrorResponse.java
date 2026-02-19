@@ -1,4 +1,4 @@
-package com.gmail.alexei28.shortcutkafkaproducer.error;
+package com.gmail.alexei28.shortcutkafkaproducer.task1.error;
 
 public class ErrorResponse {
   private String message;

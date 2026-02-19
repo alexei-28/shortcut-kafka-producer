@@ -1,23 +1,26 @@
 package com.gmail.alexei28.shortcutkafkaproducer;
 
+import com.gmail.alexei28.shortcutkafkaproducer.configuration.VersionInfoListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-// Validate is application is up: e.g. http://localhost:8081/api/v1/actuator/health
+/*-
+    Validate is application is up: e.g. http://localhost:8081/api/v1/actuator/health
+*/
 @SpringBootApplication
-public class Main {
+public class Task1 {
   private static ConfigurableApplicationContext context;
-  private static final Logger logger = LoggerFactory.getLogger(Main.class);
+  private static final Logger logger = LoggerFactory.getLogger(Task1.class);
 
   public static void main(String[] args) {
-    SpringApplication app = new SpringApplication(Main.class);
+    SpringApplication app = new SpringApplication(Task1.class);
     app.addListeners(new VersionInfoListener());
     context = app.run(args);
-
-    logger.info("Application started successfully!");
+    logger.info(
+        "Application started successfully! Задача 1 - Аналитика экранов мобильного приложения");
     logger.info(
         "Java version: {}, Java vendor: {}",
         System.getProperty("java.version"),

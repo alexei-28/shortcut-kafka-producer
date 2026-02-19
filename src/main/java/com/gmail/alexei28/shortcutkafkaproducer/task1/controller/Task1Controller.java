@@ -1,7 +1,7 @@
 package com.gmail.alexei28.shortcutkafkaproducer.task1.controller;
 
-import com.gmail.alexei28.shortcutkafkaproducer.dto.Task1Dto;
-import com.gmail.alexei28.shortcutkafkaproducer.producer.Task1Producer;
+import com.gmail.alexei28.shortcutkafkaproducer.task1.dto.Task1Dto;
+import com.gmail.alexei28.shortcutkafkaproducer.task1.producer.Task1Producer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +14,12 @@ public class Task1Controller {
     this.task1Producer = task1Producer;
   }
 
-  /** Sends a Task1 object. E.g. POST http://localhost:8080/api/v1/task1/send */
-  // Spring Boot auto convert JSON to Task1
+  /*
+    Sends a Task1 object. E.g. POST http://localhost:8080/api/v1/task1/send
+    Spring Boot auto convert JSON to Task1.
+    Example POST request:
+    /shortcut-kafka-producer/restclient.rc
+  */
   @PostMapping("/send")
   public ResponseEntity<String> sendTask1(@RequestBody Task1Dto task1Dto) {
     task1Producer.sendTask(task1Dto);
