@@ -7,18 +7,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-// Validate is application is up: e.g. http://localhost:8081/api/v1/actuator/health
 @SpringBootApplication
-public class Main {
+public class Task2 {
   private static ConfigurableApplicationContext context;
-  private static final Logger logger = LoggerFactory.getLogger(Main.class);
+  private static final Logger logger = LoggerFactory.getLogger(Task2.class);
 
   public static void main(String[] args) {
-    SpringApplication app = new SpringApplication(Main.class);
+    SpringApplication app = new SpringApplication(Task2.class);
     app.addListeners(new VersionInfoListener());
-    context = app.run(args);
 
-    logger.info("Application started successfully!");
+    context = app.run(args);
+    logger.info(
+        "\n\n ===== Application started successfully! =====\nЗадача 2 — Начисление кэшбэка");
     logger.info(
         "Java version: {}, Java vendor: {}",
         System.getProperty("java.version"),
