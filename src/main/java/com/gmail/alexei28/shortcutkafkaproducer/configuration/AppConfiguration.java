@@ -26,6 +26,9 @@ public class AppConfiguration {
   @Value("${app.kafka.topics.task1}")
   private String task1Topic;
 
+  @Value("${app.kafka.topics.task2}")
+  private String task2Topic;
+
   private final KafkaTemplate<Object, Object> kafkaTemplate;
   private final KafkaLoggingProducerListener loggingListener;
   private static final Logger logger = LoggerFactory.getLogger(AppConfiguration.class);
@@ -54,5 +57,19 @@ public class AppConfiguration {
   public NewTopic crateTask1Topic() {
     logger.info("crateTopic, topic '{}' with 1 partition and replicas 3", task1Topic);
     return TopicBuilder.name(task1Topic).partitions(1).replicas(3).build();
+  }
+
+  /*
+    Будет создан топик "message_topic" с 3 партициями, одна из которых будет лидером.
+    1 leader partition + 2 followers partitions (2 резервные партиции).
+    Резервные партиции синхронизируются с лидером.
+    Чтобы защититься от потери данных и обеспечить высокую доступность, партиции реплицируют.
+    Чаще всего используют фактор репликации 3 (RF=3), то есть на разных брокерах хранятся три копии каждой партиции.
+    Если один брокер «выключился», его копия всё равно присутствует у других, так что обработка продолжается.
+  */
+  @Bean
+  public NewTopic crateTask2Topic() {
+    logger.info("crateTopic, topic '{}' with 1 partition and replicas 3", task2Topic);
+    return TopicBuilder.name(task2Topic).partitions(1).replicas(3).build();
   }
 }

@@ -7,6 +7,7 @@ app:
   kafka:
     topics:
       task1: task1-topic
+      task2: task2-topic
 spring:
   application:
     name: shortcut-kafka-producer

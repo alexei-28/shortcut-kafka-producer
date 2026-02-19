@@ -11,9 +11,18 @@
 # Spring Boot actuator
 GET :BASE_URL/actuator/health
 
-# Create new task1
-# Post works too, entity just goes after an empty line. Same is for PUT.
+# Create new Task1Dto
 POST :BASE_URL/task1/send
+Content-Type: application/json
+
+{
+  "number": :rand-num,
+  "content": ":rand-task1"
+}
+
+
+# Create new Task2Dto
+POST :BASE_URL/task2/send
 Content-Type: application/json
 
 {
