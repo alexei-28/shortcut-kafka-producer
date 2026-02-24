@@ -6,9 +6,12 @@
 # Some generic vars
 :BASE_URL = http://localhost:8081/api/v1
 :uuid := (shell-command-to-string "uuidgen | tr -d '\\n'")
-:uuid2 := (shell-command-to-string "uuidgen | tr -d '\\n'")
-:rand-num := (random 10000)
-:rand-ord := (concat "ORD-" (number-to-string (random 10000)))
+:current-date := (format-time-string "%Y-%m-%dT%H:%M:%S%z")
+
+# Header
+:REQUEST_HEADER = <<
+Idempotency-Key: :uuid
+Content-Type: application/json
 
 # Spring Boot actuator
 GET :BASE_URL/actuator/health
@@ -16,16 +19,14 @@ GET :BASE_URL/actuator/health
 ############################# Task 3 #############################
 
 # Create new CashbackDto
-POST :BASE_URL/transfer/send
-Content-Type: application/json
+POST :BASE_URL/transfer/create
+:REQUEST_HEADER
 
 {
-  "eventId": ":uuid",
-  "operationId": ":uuid2",
   "senderIban": "DE12345678901234567890",
   "receiverIban": "FR7630006000011234567890123",
-  "receiverBic": "BNPAPRPPXXX",
   "amount": 1250.50,
   "currency": "EUR",
-  "createdAt": "2026-02-23T14:55:00+03:00"
+  "status" : "NEW",
+  "createdAt": ":current-date"
 }

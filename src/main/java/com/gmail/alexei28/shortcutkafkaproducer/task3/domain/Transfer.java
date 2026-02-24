@@ -30,9 +30,6 @@ public class Transfer {
   @Column(name = "receiver_iban", nullable = false, length = 34)
   private String receiverIban;
 
-  @Column(name = "receiver_bic", nullable = false, length = 11)
-  private String receiverBic;
-
   @Column(nullable = false, precision = 19, scale = 4)
   private BigDecimal amount;
 
@@ -46,9 +43,6 @@ public class Transfer {
   @Column(name = "created_at", nullable = false, updatable = false)
   private OffsetDateTime createdAt;
 
-  @Column(name = "processed_at")
-  private OffsetDateTime processedAt;
-
   protected Transfer() {
     // JPA
   }
@@ -57,13 +51,11 @@ public class Transfer {
       UUID operationId,
       String senderIban,
       String receiverIban,
-      String receiverBic,
       BigDecimal amount,
       String currency) {
     this.operationId = operationId;
     this.senderIban = senderIban;
     this.receiverIban = receiverIban;
-    this.receiverBic = receiverBic;
     this.amount = amount;
     this.currency = currency;
     this.status = TransferStatus.NEW;
@@ -87,10 +79,6 @@ public class Transfer {
     return receiverIban;
   }
 
-  public String getReceiverBic() {
-    return receiverBic;
-  }
-
   public BigDecimal getAmount() {
     return amount;
   }
@@ -107,10 +95,6 @@ public class Transfer {
     return createdAt;
   }
 
-  public OffsetDateTime getProcessedAt() {
-    return processedAt;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (o == null || getClass() != o.getClass()) return false;
@@ -125,31 +109,26 @@ public class Transfer {
 
   @Override
   public String toString() {
-    return "Transfer{"
-        + "id="
+    return "\nTransfer{"
+        + "id = "
         + id
-        + ", operationId="
+        + ", operationId = "
         + operationId
-        + ", senderIban='"
+        + ", senderIban = '"
         + senderIban
         + '\''
-        + ", receiverIban='"
+        + ", receiverIban = '"
         + receiverIban
         + '\''
-        + ", receiverBic='"
-        + receiverBic
-        + '\''
-        + ", amount="
+        + ", amount = "
         + amount
-        + ", currency='"
+        + ", currency = '"
         + currency
         + '\''
-        + ", status="
+        + ", status = "
         + status
-        + ", createdAt="
+        + ", createdAt = "
         + createdAt
-        + ", processedAt="
-        + processedAt
         + '}';
   }
 }
