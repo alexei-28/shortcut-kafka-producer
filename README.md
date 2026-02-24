@@ -1,4 +1,4 @@
-# shortcut-kafka-producer
+~~# shortcut-kafka-producer
 Shortcut Kafka producer test project
 
 Producer repo: https://github.com/alexei-28/shortcut-kafka-producer
@@ -117,4 +117,4 @@ Mentor platform - Shortcut: https://shortcut.education/
 
 **Ограничения:** тесты работают в CI без внешних зависимостей, никаких `Thread.sleep`, прогон < 2 минут.
 
-**Задание:** напиши интеграционные тесты. Выбери и обоснуй инструменты (embedded kafka, testcontainers, или что-то ещё).
+**Задание:** напиши интеграционные тесты. Выбери и обоснуй инструменты (embedded kafka, testcontainers, или что-то ещё).~~

@@ -6,9 +6,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-// Validate is application is up: http://localhost:8081/api/v1/actuator/health
+// Validate is application is up: e.g. http://localhost:8081/api/v1/actuator/health
 @SpringBootApplication
+@EnableScheduling
 public class Main {
   private static ConfigurableApplicationContext context;
   private static final Logger logger = LoggerFactory.getLogger(Main.class);
