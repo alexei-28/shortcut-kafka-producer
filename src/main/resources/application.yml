@@ -3,7 +3,16 @@ server:
   port: 8081
   servlet:
     context-path: /api/v1/
+management:
+  # http://localhost:8081/api/v1/actuator/mappings
+  endpoints:
+    web:
+      exposure:
+        include: mappings
 app:
+  kafka:
+    topics:
+      task4: task4-topic
 spring:
   application:
     name: shortcut-kafka-producer
@@ -42,10 +51,8 @@ spring:
     password: postgres
   kafka:
     bootstrap-servers: localhost:9092
+    # remove  this?
     topic-name: dev-topic
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 logging:
   level:
     org.springframework.kafka: info
