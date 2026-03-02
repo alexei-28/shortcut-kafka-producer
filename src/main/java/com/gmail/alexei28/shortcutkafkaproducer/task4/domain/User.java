@@ -117,14 +117,14 @@ public class User {
 
   @Override
   public boolean equals(Object o) {
-    if (o == null || getClass() != o.getClass()) return false;
-    User user = (User) o;
-    return Objects.equals(id, user.id);
+    if (this == o) return true;
+    if (!(o instanceof User that)) return false;
+    return Objects.equals(id, that.id);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(id);
+    return Objects.hash(id);
   }
 
   @Override
