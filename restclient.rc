@@ -15,7 +15,7 @@ Content-Type: application/json
 # Spring Boot actuator
 GET :BASE_URL/actuator/health
 
-############################# Task 4 #############################
+############################# Task 5 #############################
 
 # Create new user
 POST :BASE_URL/user/create

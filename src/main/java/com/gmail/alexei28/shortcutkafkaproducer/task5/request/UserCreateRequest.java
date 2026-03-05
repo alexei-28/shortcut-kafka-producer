@@ -1,4 +1,4 @@
-package com.gmail.alexei28.shortcutkafkaproducer.task4.request;
+package com.gmail.alexei28.shortcutkafkaproducer.task5.request;
 
 import java.util.UUID;
 

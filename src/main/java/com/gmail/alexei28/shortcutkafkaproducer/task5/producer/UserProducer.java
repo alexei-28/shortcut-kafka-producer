@@ -1,6 +1,5 @@
-package com.gmail.alexei28.shortcutkafkaproducer.task4.producer;
+package com.gmail.alexei28.shortcutkafkaproducer.task5.producer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,15 +9,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserProducer {
-  @Value("${app.kafka.topics.task4}")
+  @Value("${app.kafka.topics.task5}")
   private String topic;
 
-  private final ObjectMapper objectMapper;
   private final KafkaTemplate<String, Object> kafkaTemplate;
   private static final Logger logger = LoggerFactory.getLogger(UserProducer.class);
 
-  public UserProducer(ObjectMapper objectMapper, KafkaTemplate<String, Object> kafkaTemplate) {
-    this.objectMapper = objectMapper;
+  public UserProducer(KafkaTemplate<String, Object> kafkaTemplate) {
     this.kafkaTemplate = kafkaTemplate;
   }
 
