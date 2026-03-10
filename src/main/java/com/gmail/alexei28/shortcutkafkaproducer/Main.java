@@ -17,8 +17,8 @@ public class Main {
     SpringApplication app = new SpringApplication(Main.class);
     app.addListeners(new VersionInfoListener());
     context = app.run(args);
-
-    logger.info("Application started successfully!");
+    logger.info(
+        "\n\n ===== Application started successfully! =====\n Задача 4 - Битые сообщения из CFT");
     logger.info(
         "Java version: {}, Java vendor: {}",
         System.getProperty("java.version"),
