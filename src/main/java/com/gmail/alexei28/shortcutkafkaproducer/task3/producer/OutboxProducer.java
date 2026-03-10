@@ -16,6 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 /*
+
+    Задача 3 — «Перевод через СБП»
+    Сервис обрабатывает межбанковские переводы. Клиент инициировал перевод → списание со счёта → результат в следующий сервис по цепочке.
+
+    Что говорит бизнес:
+
+    Двойное списание — P1, штраф от регулятора
+    Потеря перевода — P1, клиент без денег
+    Нужен полный аудит каждой операции
+    Стек: PostgreSQL + Kafka
+    Задание: реализуй полный цикл обработки. Ни потеря, ни дубль недопустимы — выбери подход и обоснуй.
+
   - Решение
     Transactional Outbox (at-least-once) + Idempotent Consumer (exactly-once на бизнес-уровне)
     -на стороне producer-a

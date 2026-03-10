@@ -19,6 +19,7 @@ import com.gmail.alexei28.shortcutkafkaproducer.task3.repo.OutboxEventRepository
 import com.gmail.alexei28.shortcutkafkaproducer.task3.service.OrderService;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
+import jakarta.persistence.EntityManager;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
@@ -71,11 +72,22 @@ class TransactionalOutboxIntegrationTest {
   static PostgreSQLContainer<?> postgresContainer =
       new PostgreSQLContainer<>(DockerImageName.parse("postgres:16-alpine"));
 
+  @Autowired private EntityManager entityManager;
   @Autowired private OrderService orderService;
   @Autowired private OrderRepository orderRepository;
   @Autowired private OutboxEventRepository outboxEventRepository;
   @Autowired private OutboxProducer outboxProducer;
-  // @MockitoSpyBean создает полноценный Spring-бин, но оборачивает его в Mockito Spy.
+  /*
+      Поскольку KafkaTemplate помечен как @MockitoSpyBean, Spring использует реальный экземпляр,
+      но позволяет нам «подсматривать» за его методами через verify.
+      @MockitoSpyBean: Позволяет нам следить за реальным бином KafkaTemplate.
+      Spring создает настоящий экземпляр вашего KafkaTemplate со всеми его зависимостями (repository, taskMapper).
+      Обертка (Spy): Mockito «оборачивает» этот реальный объект.
+      Это позволяет вам:
+      -Вызывать реальные методы (код внутри consume и process будет выполнен).
+      -Следить за вызовами (использовать verify, чтобы посчитать количество вызовов).
+      -Переопределять поведение только конкретных методов, если нужно (через doThrow или doReturn).
+  */
   @MockitoSpyBean private KafkaTemplate<?, ?> kafkaTemplateSpy;
   @Autowired private ObjectMapper objectMapper;
   private static String jsonTemplate;
@@ -93,6 +105,7 @@ class TransactionalOutboxIntegrationTest {
   void setUp() throws JsonProcessingException {
     outboxEventRepository.deleteAll();
     orderRepository.deleteAll();
+    entityManager.clear();
 
     // Update specific nodes in the JSON
     DocumentContext context =
@@ -221,31 +234,24 @@ class TransactionalOutboxIntegrationTest {
   @DisplayName(
       "Если Kafka недоступна -> транзакция откатывается -> статус OutboxEvent остается NEW")
   void shouldRollbackTransactionIfKafkaFails() {
-    // Arrange
-    OutboxStatus initOutboxStatus = OutboxStatus.NEW;
 
-    // Act
-    // Создаем заказ (Order + Outbox NEW)
     orderService.createOrder(createOrderRequest);
-    OutboxEvent actualOutboxEvent = outboxEventRepository.findAll().getFirst();
-    // Assert
-    assertThat(actualOutboxEvent.getStatus()).isEqualTo(initOutboxStatus);
-    assertThat(actualOutboxEvent.getSentAt()).isNull();
 
-    // Настраиваем MockitoSpyBean на выброс исключения
-    // Используем doReturn(failedFuture), так как в коде вызывается completableFuture.get()
+    OutboxEvent event = outboxEventRepository.findAll().getFirst();
+
     doReturn(CompletableFuture.failedFuture(new RuntimeException("Kafka down")))
         .when(kafkaTemplateSpy)
         .send(any(), any(), any());
 
-    // Вызываем publishOutboxEvent вручную
     assertThatThrownBy(() -> outboxProducer.publishOutboxEvent())
         .isInstanceOf(RuntimeException.class);
 
-    // Проверяем: статус НЕ изменился
-    OutboxEvent actualOutboxEventAfterFail = outboxEventRepository.findAll().getFirst();
-    assertThat(actualOutboxEventAfterFail.getStatus()).isEqualTo(initOutboxStatus);
-    assertThat(actualOutboxEventAfterFail.getSentAt()).isNull();
+    entityManager.clear(); // ВАЖНО
+
+    OutboxEvent reloaded = outboxEventRepository.findById(event.getId()).orElseThrow();
+
+    assertThat(reloaded.getStatus()).isEqualTo(OutboxStatus.NEW);
+    assertThat(reloaded.getSentAt()).isNull();
   }
 
   /*
