@@ -9,12 +9,12 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 // Validate is application is up: http://localhost:8081/api/v1/actuator/health
 @SpringBootApplication
-public class Main {
+public class Task5 {
   private static ConfigurableApplicationContext context;
-  private static final Logger logger = LoggerFactory.getLogger(Main.class);
+  private static final Logger logger = LoggerFactory.getLogger(Task5.class);
 
   public static void main(String[] args) {
-    SpringApplication app = new SpringApplication(Main.class);
+    SpringApplication app = new SpringApplication(Task5.class);
     app.addListeners(new VersionInfoListener());
     context = app.run(args);
     logger.info("\n\n ===== Application started successfully! =====\n Задача 5 - DLQ, но удобнее");
