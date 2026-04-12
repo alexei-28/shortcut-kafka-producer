@@ -22,11 +22,26 @@ public class UserProducer {
     this.kafkaTemplate = kafkaTemplate;
   }
 
+  /*
+     - не блокируем поток
+     - контролируем результат
+     - добавить настройки в application.yml (acks, retries)
+  */
   public void sendRaw(String value) {
-    //  Idempotency key
+    // Нет идемпотентности на уровне Kafka -> просто каждый раз генерируется новый UUID, и это
+    // вообще не решает проблему дубликатов.
     String eventId = UUID.randomUUID().toString();
-    kafkaTemplate.send(topic, eventId, value);
-    logger.info(
-        "sendRaw, successful sent to Kafka successfully, key = {}, value = {}", eventId, value);
+
+    kafkaTemplate
+        .send(topic, eventId, value)
+        .whenComplete(
+            (result, ex) -> {
+              if (ex != null) {
+                logger.error("sendRaw, send failed: {}", ex.getMessage());
+              } else {
+                logger.info(
+                    "sendRaw, successfully sent to topic: {}", result.getRecordMetadata().topic());
+              }
+            });
   }
 }
