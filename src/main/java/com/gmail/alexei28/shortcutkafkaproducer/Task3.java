@@ -11,12 +11,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 // Validate is application is up: e.g. http://localhost:8081/api/v1/actuator/health
 @SpringBootApplication
 @EnableScheduling
-public class Main {
+public class Task3 {
   private static ConfigurableApplicationContext context;
-  private static final Logger logger = LoggerFactory.getLogger(Main.class);
+  private static final Logger logger = LoggerFactory.getLogger(Task3.class);
 
   public static void main(String[] args) {
-    SpringApplication app = new SpringApplication(Main.class);
+    SpringApplication app = new SpringApplication(Task3.class);
     app.addListeners(new VersionInfoListener());
     context = app.run(args);
 
