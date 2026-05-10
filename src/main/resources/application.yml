@@ -4,6 +4,9 @@ server:
   servlet:
     context-path: /api/v1/
 app:
+  kafka:
+    topics:
+      task1: task1-topic
 spring:
   application:
     name: shortcut-kafka-producer
@@ -46,9 +49,11 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-logging:
-  level:
-    org.springframework.kafka: info
-    org.springframework.web.filter.CommonsRequestLoggingFilter: debug
-    org.hibernate.orm.jdbc.bind: trace
-    org.hibernate.SQL: debug
+      acks: all # сообщение подтверждено всеми репликами
+      retries: 3 # повторные попытки
+      properties:
+        delivery.timeout.ms: 120000
+logging.level:
+  org.springframework.kafka: info
+  org.hibernate.SQL: debug
+  org.hibernate.orm.jdbc.bind: trace
