@@ -1,4 +1,4 @@
-package com.gmail.alexei28.shortcutkafkaproducer.listeners;
+package com.gmail.alexei28.shortcut.kafka.producer.listeners;
 
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;

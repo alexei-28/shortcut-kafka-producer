@@ -1,4 +1,4 @@
-package com.gmail.alexei28.shortcutkafkaproducer.task4.producer;
+package com.gmail.alexei28.shortcut.kafka.producer.task4.producer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.UUID;

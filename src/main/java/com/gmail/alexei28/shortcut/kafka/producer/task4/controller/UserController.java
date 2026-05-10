@@ -1,6 +1,6 @@
-package com.gmail.alexei28.shortcutkafkaproducer.task4.controller;
+package com.gmail.alexei28.shortcut.kafka.producer.task4.controller;
 
-import com.gmail.alexei28.shortcutkafkaproducer.task4.producer.UserProducer;
+import com.gmail.alexei28.shortcut.kafka.producer.task4.producer.UserProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
