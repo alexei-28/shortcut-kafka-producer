@@ -1,7 +1,7 @@
 package com.gmail.alexei28.shortcut.kafka.producer.task3.mapper;
 
-import com.gmail.alexei28.shortcutkafkaproducer.task3.domain.OrderEntity;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.event.CreateOrderEvent;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.domain.OrderEntity;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.event.CreateOrderEvent;
 import java.util.UUID;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

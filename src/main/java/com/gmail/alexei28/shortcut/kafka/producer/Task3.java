@@ -1,6 +1,6 @@
 package com.gmail.alexei28.shortcut.kafka.producer;
 
-import com.gmail.alexei28.shortcutkafkaproducer.configuration.VersionInfoListener;
+import com.gmail.alexei28.shortcut.kafka.producer.configuration.VersionInfoListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;

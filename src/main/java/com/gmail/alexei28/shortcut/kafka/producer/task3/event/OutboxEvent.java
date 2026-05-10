@@ -1,7 +1,7 @@
 package com.gmail.alexei28.shortcut.kafka.producer.task3.event;
 
-import com.gmail.alexei28.shortcutkafkaproducer.task3.enums.OutboxStatus;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.util.JsonUtils;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.enums.OutboxStatus;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.util.JsonUtils;
 import jakarta.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.Objects;

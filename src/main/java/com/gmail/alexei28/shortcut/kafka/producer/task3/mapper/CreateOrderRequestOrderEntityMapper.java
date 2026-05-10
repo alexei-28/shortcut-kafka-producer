@@ -1,8 +1,8 @@
 package com.gmail.alexei28.shortcut.kafka.producer.task3.mapper;
 
-import com.gmail.alexei28.shortcutkafkaproducer.task3.domain.OrderEntity;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.dto.CreateOrderRequest;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.enums.OrderStatus;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.domain.OrderEntity;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.dto.CreateOrderRequest;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.enums.OrderStatus;
 import java.time.OffsetDateTime;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

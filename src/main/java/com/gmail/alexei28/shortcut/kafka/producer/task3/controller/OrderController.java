@@ -1,9 +1,9 @@
 package com.gmail.alexei28.shortcut.kafka.producer.task3.controller;
 
-import com.gmail.alexei28.shortcutkafkaproducer.task3.domain.OrderEntity;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.dto.CreateOrderRequest;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.response.CreateOrderResponse;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.service.OrderService;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.domain.OrderEntity;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.dto.CreateOrderRequest;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.response.CreateOrderResponse;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;

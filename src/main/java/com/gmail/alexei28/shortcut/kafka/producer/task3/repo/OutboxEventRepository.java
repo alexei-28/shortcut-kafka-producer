@@ -1,6 +1,6 @@
 package com.gmail.alexei28.shortcut.kafka.producer.task3.repo;
 
-import com.gmail.alexei28.shortcutkafkaproducer.task3.event.OutboxEvent;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.event.OutboxEvent;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;

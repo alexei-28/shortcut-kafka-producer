@@ -1,8 +1,8 @@
 package com.gmail.alexei28.shortcut.kafka.producer.task3.producer;
 
-import com.gmail.alexei28.shortcutkafkaproducer.task3.enums.OutboxStatus;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.event.OutboxEvent;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.repo.OutboxEventRepository;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.enums.OutboxStatus;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.event.OutboxEvent;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.repo.OutboxEventRepository;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

@@ -6,9 +6,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.gmail.alexei28.shortcutkafkaproducer.task3.domain.OrderEntity;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.enums.OrderStatus;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.service.OrderService;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.domain.OrderEntity;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.enums.OrderStatus;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.service.OrderService;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import java.io.IOException;

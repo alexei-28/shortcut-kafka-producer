@@ -1,6 +1,6 @@
 package com.gmail.alexei28.shortcut.kafka.producer.task3.domain;
 
-import com.gmail.alexei28.shortcutkafkaproducer.task3.enums.OrderStatus;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.enums.OrderStatus;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;

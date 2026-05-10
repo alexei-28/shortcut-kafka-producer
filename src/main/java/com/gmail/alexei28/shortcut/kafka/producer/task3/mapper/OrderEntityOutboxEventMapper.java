@@ -1,10 +1,10 @@
 package com.gmail.alexei28.shortcut.kafka.producer.task3.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.domain.OrderEntity;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.enums.OutboxStatus;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.event.CreateOrderEvent;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.event.OutboxEvent;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.domain.OrderEntity;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.enums.OutboxStatus;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.event.CreateOrderEvent;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.event.OutboxEvent;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 import org.mapstruct.AfterMapping;

@@ -1,14 +1,14 @@
 package com.gmail.alexei28.shortcut.kafka.producer.task3.service;
 
-import com.gmail.alexei28.shortcutkafkaproducer.task3.domain.OrderEntity;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.dto.CreateOrderRequest;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.event.CreateOrderEvent;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.event.OutboxEvent;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.mapper.CreateOrderRequestOrderEntityMapper;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.mapper.OrderEntityCreateOrderEventMapper;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.mapper.OrderEntityOutboxEventMapper;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.repo.OrderRepository;
-import com.gmail.alexei28.shortcutkafkaproducer.task3.repo.OutboxEventRepository;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.domain.OrderEntity;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.dto.CreateOrderRequest;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.event.CreateOrderEvent;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.event.OutboxEvent;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.mapper.CreateOrderRequestOrderEntityMapper;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.mapper.OrderEntityCreateOrderEventMapper;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.mapper.OrderEntityOutboxEventMapper;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.repo.OrderRepository;
+import com.gmail.alexei28.shortcut.kafka.producer.task3.repo.OutboxEventRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
