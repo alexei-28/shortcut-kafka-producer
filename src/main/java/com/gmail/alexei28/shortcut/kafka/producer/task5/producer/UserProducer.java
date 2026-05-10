@@ -1,4 +1,4 @@
-package com.gmail.alexei28.shortcutkafkaproducer.task5.producer;
+package com.gmail.alexei28.shortcut.kafka.producer.task5.producer;
 
 import java.util.UUID;
 import org.slf4j.Logger;

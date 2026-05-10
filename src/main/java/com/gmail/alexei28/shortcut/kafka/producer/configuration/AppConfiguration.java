@@ -1,4 +1,4 @@
-package com.gmail.alexei28.shortcutkafkaproducer.configuration;
+package com.gmail.alexei28.shortcut.kafka.producer.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
