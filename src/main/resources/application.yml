@@ -4,6 +4,9 @@ server:
   servlet:
     context-path: /api/v1/
 app:
+  kafka:
+    topics:
+      task2: task2-topic
 spring:
   application:
     name: shortcut-kafka-producer
@@ -46,6 +49,10 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all # сообщение подтверждено всеми репликами
+      retries: 3 # повторные попытки
+      properties:
+        delivery.timeout.ms: 120000
 logging:
   level:
     org.springframework.kafka: info

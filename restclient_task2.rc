@@ -1,0 +1,30 @@
+# Help: https://github.com/pashky/restclient.el
+# More examples: https://github.com/pashky/restclient.el/blob/master/examples/httpbin
+# C-c C-v: same as C-c C-c, but doesn't switch focus to other window
+# C-c C-u: copy query under the cursor as a curl command
+
+# Some generic vars
+:BASE_URL = http://localhost:8081/api/v1
+:uuid := (shell-command-to-string "uuidgen | tr -d '\\n'")
+:rand-num := (random 10000)
+:rand-ord := (concat "ORD-" (number-to-string (random 10000)))
+
+# Spring Boot actuator
+GET :BASE_URL/actuator/health
+
+############################# Task 2 #############################
+
+# Create new CashbackDto
+POST :BASE_URL/cashback/send
+Content-Type: application/json
+
+{
+  "eventId": ":uuid",
+  "userId": :rand-num,
+  "orderId": ":rand-ord",
+  "amount": 150.52,
+  "percentage": 0.05,
+  "status": "COMPLETED",
+  "createdAt": "2026-01-20T14:30:00",
+  "appliedAt": "2026-01-23T09:36:50"
+}
