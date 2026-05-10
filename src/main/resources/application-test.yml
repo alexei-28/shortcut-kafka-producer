@@ -13,6 +13,7 @@ spring:
   #  password: postgres
   kafka:
     bootstrap-servers: localhost:9092
+    # remove this?
     topic-name: test-topic
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
