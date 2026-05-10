@@ -4,6 +4,9 @@ server:
   servlet:
     context-path: /api/v1/
 app:
+  kafka:
+    topics:
+      task3: task3-topic
 spring:
   application:
     name: shortcut-kafka-producer
@@ -46,9 +49,25 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      # ГАРАНТИИ ДОСТАВКИ (At-Least-Once + Idempotence)
+      acks: all
+      # Включаем идемпотентность (защита от дублей при сетевых сбоях)
+      # Это автоматически устанавливает retries в MAX_INT
+      enable-idempotence: true
+      properties:
+        # Ограничиваем общее время попыток отправки
+        delivery.timeout.ms: 120000
+        # Время ожидания перед отправкой для накопления пакета (повышает throughput)
+        linger.ms: 10
+        # Максимальное кол-во запросов в полете для сохранения порядка
+        max.in.flight.requests.per.connection: 5
+        # Сжатие данных для экономии трафика и места в Kafka
+        compression.type: snappy
 logging:
   level:
     org.springframework.kafka: info
     org.springframework.web.filter.CommonsRequestLoggingFilter: debug
-    org.hibernate.orm.jdbc.bind: trace
-    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: debug
+    org.hibernate.SQL: info
+    #org.springframework.transaction.interceptor: debug
+    #org.springframework.orm.jpa.JpaTransactionManager: debug

@@ -1,0 +1,43 @@
+# Help: https://github.com/pashky/restclient.el
+# More examples: https://github.com/pashky/restclient.el/blob/master/examples/httpbin
+# C-c C-v: same as C-c C-c, but doesn't switch focus to other window
+# C-c C-u: copy query under the cursor as a curl command
+# C-h e (view-echo-area-messages): print request header and body
+
+# Some generic vars
+:BASE_URL = http://localhost:8081/api/v1
+:uuid := (shell-command-to-string "uuidgen | tr -d '\\n'")
+:current-date := (format-time-string "%Y-%m-%dT%H:%M:%S%z")
+
+# Header
+:REQUEST_HEADER = <<
+Content-Type: application/json
+
+# Spring Boot actuator
+GET :BASE_URL/actuator/health
+
+############################# Task 3 #############################
+
+# Create new orderEntity
+POST :BASE_URL/order/create
+:REQUEST_HEADER
+
+{
+  "externalId": ":uuid",
+  "senderIBAN": "DE89370400440532013000",
+  "receiverIBAN": "GB29NWBK60161331926819",
+  "amount": 1250.50,
+  "currency": "EUR"
+}
+
+# Try to create orderEntity with the same externalId
+POST :BASE_URL/order/create
+Content-Type: application/json
+
+{
+  "externalId": "c51ede4a-f71b-4ab9-9424-59fa7ff15ca7",
+  "senderIBAN": "DE89370400440532013000",
+  "receiverIBAN": "GB29NWBK60161331926819",
+  "amount": 1250.50,
+  "currency": "EUR"
+}

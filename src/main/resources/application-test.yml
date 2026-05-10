@@ -1,19 +1,5 @@
 # test profile
 app:
-spring:
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
-      #ddl-auto: update
-  # Comment because use @Testcontainers for Kafka and Postgres
-  #datasource:
-  #  url: jdbc:postgresql://localhost:5433/docker_kafka_producer_db
-  #  driver-class-name: org.postgresql.Driver
-  #  username: postgres
-  #  password: postgres
   kafka:
-    bootstrap-servers: localhost:9092
-    topic-name: test-topic
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    topics:
+      task3: test-topic
