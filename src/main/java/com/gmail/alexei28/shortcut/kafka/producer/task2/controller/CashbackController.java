@@ -1,7 +1,7 @@
-package com.gmail.alexei28.shortcutkafkaproducer.task2.controller;
+package com.gmail.alexei28.shortcut.kafka.producer.task2.controller;
 
-import com.gmail.alexei28.shortcutkafkaproducer.task2.dto.CashbackDto;
-import com.gmail.alexei28.shortcutkafkaproducer.task2.producer.CashbackProducer;
+import com.gmail.alexei28.shortcut.kafka.producer.task2.dto.CashbackDto;
+import com.gmail.alexei28.shortcut.kafka.producer.task2.producer.CashbackProducer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
