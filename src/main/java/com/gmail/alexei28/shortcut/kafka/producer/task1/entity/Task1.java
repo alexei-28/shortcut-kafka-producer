@@ -1,4 +1,4 @@
-package com.gmail.alexei28.shortcutkafkaproducer.task1.entity;
+package com.gmail.alexei28.shortcut.kafka.producer.task1.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,6 +1,6 @@
-package com.gmail.alexei28.shortcutkafkaproducer.task1.configuration;
+package com.gmail.alexei28.shortcut.kafka.producer.task1.configuration;
 
-import com.gmail.alexei28.shortcutkafkaproducer.listeners.KafkaLoggingProducerListener;
+import com.gmail.alexei28.shortcut.kafka.producer.listeners.KafkaLoggingProducerListener;
 import jakarta.annotation.PostConstruct;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.slf4j.Logger;

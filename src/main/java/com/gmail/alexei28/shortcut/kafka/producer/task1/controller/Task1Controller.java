@@ -1,7 +1,7 @@
-package com.gmail.alexei28.shortcutkafkaproducer.task1.controller;
+package com.gmail.alexei28.shortcut.kafka.producer.task1.controller;
 
-import com.gmail.alexei28.shortcutkafkaproducer.task1.dto.Task1Dto;
-import com.gmail.alexei28.shortcutkafkaproducer.task1.producer.Task1Producer;
+import com.gmail.alexei28.shortcut.kafka.producer.task1.dto.Task1Dto;
+import com.gmail.alexei28.shortcut.kafka.producer.task1.producer.Task1Producer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

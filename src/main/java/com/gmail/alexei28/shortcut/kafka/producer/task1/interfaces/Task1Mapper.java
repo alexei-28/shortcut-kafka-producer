@@ -1,7 +1,7 @@
-package com.gmail.alexei28.shortcutkafkaproducer.task1.interfaces;
+package com.gmail.alexei28.shortcut.kafka.producer.task1.interfaces;
 
-import com.gmail.alexei28.shortcutkafkaproducer.task1.dto.Task1Dto;
-import com.gmail.alexei28.shortcutkafkaproducer.task1.entity.Task1;
+import com.gmail.alexei28.shortcut.kafka.producer.task1.dto.Task1Dto;
+import com.gmail.alexei28.shortcut.kafka.producer.task1.entity.Task1;
 import org.mapstruct.Mapper;
 
 // Чтобы маппер стал Spring-бином

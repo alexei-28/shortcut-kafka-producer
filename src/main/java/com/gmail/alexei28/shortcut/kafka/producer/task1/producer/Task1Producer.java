@@ -1,6 +1,6 @@
-package com.gmail.alexei28.shortcutkafkaproducer.task1.producer;
+package com.gmail.alexei28.shortcut.kafka.producer.task1.producer;
 
-import com.gmail.alexei28.shortcutkafkaproducer.task1.dto.Task1Dto;
+import com.gmail.alexei28.shortcut.kafka.producer.task1.dto.Task1Dto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
